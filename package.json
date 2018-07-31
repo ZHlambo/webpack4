@@ -4,8 +4,8 @@
   "description": "",
   "main": "config.js",
   "scripts": {
-    "dev": "nodemon --exec node server.js",
-    "build": "webpack --mode production -p --progress --profile --colors --config webpack.config.js"
+    "dev": "cross-env NODE_ENV=development nodemon --exec node server.js",
+    "build": "cross-env NODE_ENV=production webpack -p --progress --profile --colors --config webpack.config.js"
   },
   "dependencies": {
     "babel-core": "^6.26.3",

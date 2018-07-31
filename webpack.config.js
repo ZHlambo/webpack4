@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var config = require('./config');
 
 var webpackConfig = {
-  mode: "development",
+  mode: config.env,
   entry: {
     main: "./src/main.js",
   },
@@ -32,7 +32,6 @@ var webpackConfig = {
       chunkFilename: "[id].css"
     }),
     new webpack.HotModuleReplacementPlugin(),
-    // new webpack.optimize.UglifyJsPlugin(),//source tree
   ],
   module: {
     rules: [{
@@ -43,13 +42,7 @@ var webpackConfig = {
       {
         test: /\.scss$/,
         use: [
-          {
-            loader: 'style-loader',
-            options: {
-              hmr: true,
-              sourceMap: true,
-            }
-          },
+          config.dev ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -58,7 +51,6 @@ var webpackConfig = {
             }
           },
           "sass-loader",
-            // MiniCssExtractPlugin.loader,
         ]
       }
     ]
@@ -68,15 +60,9 @@ var webpackConfig = {
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
+          name: 'vendors',
           chunks: 'all'
         },
-        // styles: {
-        //   name: 'styles',
-        //   test: /\.scss|css$/,
-        //   chunks: 'all',    // merge all the css chunk to one file
-        //   enforce: true
-        // }
       }
     }
   },
