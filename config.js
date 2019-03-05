@@ -10,5 +10,7 @@ config.dev = config.env === 'development';
 config.prod = config.env === 'production';
 config.publicPath = config.prod ? `/` : `http://${config.server_host}:${config.server_port}/`;
 config.devTool = config.prod ? undefined : "source-map";
-console.log(config);
+
+// console.log(config);
+
 module.exports = config;

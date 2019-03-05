@@ -11,15 +11,18 @@ const history = createHistory();
 const middleware = routerMiddleware(history);
 const store = createStore(reducers, applyMiddleware(middleware));
 
-
-// webpack3.5.5版本热加载可以实现不刷新页面直接替换
-  if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./reducers/index', () => {
-      const nextRootReducer = require('./reducers/index');
-      store.replaceReducer(nextRootReducer);
-    });
-  }
+/**
+*   https://github.com/reactjs/react-redux/releases/tag/v2.0.0
+*   webpack issue中提到不能不刷新页面直接替换
+*   webpack3.5.5版本热加载可以实现不刷新页面直接替换
+*/
+if (module.hot) {
+  // Enable Webpack hot module replacement for reducers
+  module.hot.accept('./reducers', () => {
+    const nextRootReducer = require('./reducers/index');
+    store.replaceReducer(nextRootReducer);
+  });
+}
 
 ReactDOM.render(<Provider store={store}>
   <ConnectedRouter history={history}>

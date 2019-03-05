@@ -52,13 +52,30 @@ var webpackConfig = {
           },
           "sass-loader",
         ]
+      },
+      {
+          test: /\.(js|jsx)$/,
+          include: path.resolve(__dirname, "src/views"),
+          exclude: [path.resolve(__dirname, "src/views/router.js"),path.resolve(__dirname, "src/views/bundle.js")],
+          use: [
+              {
+                  loader: 'bundle-loader',
+                  options: {
+                      lazy: true,
+                      name: '[name]'
+                  }
+              },
+              {
+                  loader: 'babel-loader'
+              }
+          ]
       }
     ]
   },
   optimization: {
     splitChunks: {
       cacheGroups: {
-        commons: {
+        vendors: {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all'
@@ -74,7 +91,7 @@ var webpackConfig = {
     ],
     extensions: [".js", ".json", ".jsx", ".css"],
   },
-  devtool: config.devTool,
+  // devtool: config.devTool,
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),
     hot: true

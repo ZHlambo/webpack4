@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {connect} from 'react-redux';
 import style from "./index.scss"
 import fetch from "../reducers/fetch"
+import NavBar from "./NavBar"
 
 @connect(state=>({aa:state}),{})
 export default class home extends Component{
@@ -12,15 +13,14 @@ export default class home extends Component{
     }
   }
   componentWillMount(){
-    fetch.get("/assets/json/carrier_category.min.json").then(e=>{
-      console.log(e);
-    })
+    // fetch.get("/assets/json/carrier_category.min.json").then(e=>{
+    //   console.log(e);
+    // })
   }
   render(){
     return (
-      <div className={style.a}>
-        {this.state.value}
-        <div className={style.b}>sdfsadcfsa</div>
+      <div>
+        <NavBar></NavBar>
       </div>
     );
   }
